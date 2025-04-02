@@ -18,8 +18,9 @@ The Analytics Engineering Framework comprised of:
 - [gcloud cli](https://cloud.google.com/sdk/docs/install-sdk)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [github](https://docs.github.com/en/get-started/getting-started-with-git/set-up-git)
 - [python3](https://www.python.org/downloads/)
+- [terraform](https://developer.hashicorp.com/terraform/install)
 - A clean [GCP project](https://developers.google.com/workspace/guides/create-project) to deploy the AEF
-- A clean local working directory
+- A clean local working directory with >= 5GB storage available. Please note that Cloudshell instances provide 5GB storage.
 
 ### Deployment:
 Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Cloud Composer environment setup.
