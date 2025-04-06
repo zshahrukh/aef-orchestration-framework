@@ -120,6 +120,12 @@ module "scheduling-function" {
   depends_on = [google_firestore_database.database]
 }
 
+#Grant the Additional Role for eventArc default Service Agent to be able to call CloudRun Cloud functions
+resource "google_project_iam_member" "compute_default_sa_additional_role" {
+  project = var.project
+  role = 'roles/cloudfunctions.admin'
+  member = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+}
 
 module "bigquery-dataset" {
   source     = "github.com/GoogleCloudPlatform/cloud-foundation-fabric/modules/bigquery-dataset"
