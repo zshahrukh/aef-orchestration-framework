@@ -114,7 +114,7 @@ git push origin main
 cd $working_directory
 if [ ! -f "aef-data-model/sample-data/terraform/tfplansampledata" ]; then
   echo "Deploying demo data sources aef-data-model/sample-data ... "
-  git clone git@github.com:googlecloudplatform/aef-data-model.git
+  gh repo fork googlecloudplatform/aef-data-model --clone
   cd aef-data-model/sample-data/terraform/
   terraform_prefix=$(echo "sample-data/environments/dev" | sed 's/\//\\\//g')
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
@@ -166,7 +166,7 @@ fi
 cd $working_directory
 if [ ! -f "aef-data-orchestration/terraform/tfplandataorch" ]; then
   echo "Deploying aef-data-orchestration repository... "
-  git clone git@github.com:googlecloudplatform/aef-data-orchestration.git
+  gh repo fork googlecloudplatform/aef-data-orchestration --clone
   cd aef-data-orchestration/terraform
   terraform_prefix=$(echo "aef-data-orchestration/environments/dev" | sed 's/\//\\\//g')
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
@@ -189,7 +189,7 @@ fi
 
 cd $working_directory
 if [ ! -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
-  git clone git@github.com:googlecloudplatform/aef-data-transformation.git
+  gh repo fork googlecloudplatform/aef-data-transformation --clone
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" aef-data-transformation/jobs/dev/dataflow-flextemplate-job-executor/sample_jdbc_dataflow_ingestion.json
   gcloud config set project $project_id
   fake_onprem_sql_private_ip=$(gcloud sql instances describe fake-on-prem-instance --format="value(ipAddresses[2].ipAddress)")
@@ -218,7 +218,7 @@ fi
 
 cd $working_directory
 if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
-  git clone git@github.com:googlecloudplatform/aef-orchestration-framework.git
+  gh repo fork googlecloudplatform/aef-orchestration-framework --clone
   cd aef-orchestration-framework/terraform
   terraform_prefix=$(echo "aef-orchestration-framework/environments/dev" | sed 's/\//\\\//g')
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
