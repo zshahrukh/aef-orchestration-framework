@@ -133,8 +133,6 @@ if [ ! -f "aef-data-model/sample-data/terraform/tfplansampledata" ]; then
   terraform init
   terraform plan -out=tfplansampledata -var-file="demo.tfvars"
   terraform apply -auto-approve tfplansampledata
-  terraform plan -out=tfplansampledata -var-file="demo.tfvars"
-  terraform apply -auto-approve tfplansampledata
   fake_onprem_sql_private_ip=$(terraform output fake_onprem_sql_ip)
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-model/sample-data."
@@ -160,8 +158,6 @@ if [ ! -f "aef-data-model/terraform/tfplandatamodel" ]; then
   terraform init
   terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatamodel
-  terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
-  terraform apply -auto-approve tfplandatamodel
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-model."
   read -r -p "Do you want to skip it and continue? [y/N] " response
@@ -184,8 +180,6 @@ if [ ! -f "aef-data-orchestration/terraform/tfplandataorch" ]; then
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
   terraform init
-  terraform plan -out=tfplandataorch -var-file="prod.tfvars"
-  terraform apply -auto-approve tfplandataorch
   terraform plan -out=tfplandataorch -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandataorch
 else
@@ -217,8 +211,6 @@ if [ ! -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
   terraform init
   terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
   terraform apply -auto-approve tfplandatatrans
-  terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
-  terraform apply -auto-approve tfplandatatrans
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-transformation."
   read -r -p "Do you want to skip it and continue? [y/N] " response
@@ -241,6 +233,8 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   terraform init
   terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
   terraform apply -auto-approve tfplanorchframework
+  #Propagation Delay - Eventarc API enabled for the first time in a project, Eventarc Service Agent is created
+  #Wait for 5-15
   terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
   terraform apply -auto-approve tfplanorchframework
 else
