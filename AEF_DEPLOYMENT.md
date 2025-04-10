@@ -24,31 +24,47 @@ The Analytics Engineering Framework comprised of:
 
 ### Deployment:
 Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Cloud Composer environment setup.
-1. Download `demo_deployment` folder containing demo deployment scripts:
+
+1. Create a new ssh key to use with github (skip if already have a key).
+   ```bash
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   eval "$(ssh-agent -s)"
+   cat ~/.ssh/id_ed25519.pub
+   ```
+   
+2. Add your recently created key (last output) to your github account (skip if your key is already configured in github).
+   ![git_add_key.png](git_add_key.png)
+
+3. Login in gcloud
+   ```bash
+   gcloud auth login
+   ```
+   
+4. Download `demo_deployment` folder containing demo deployment scripts:
    ```bash
    mkdir demo_deployment
    cd demo_deployment
    curl -L https://api.github.com/repos/googlecloudplatform/aef-orchestration-framework/contents/demo_deployment?ref=main |   grep -E '"download_url":' |   awk '{print $2}' |   sed 's/"//g;s/,//g' |   xargs -n 1 curl -L -O
    ```
 
-2. Set variables :
+5. Set variables :
     ```bash
    PROJECT_ID="your-gcp-project-id"             # Replace with your GCP Project ID
    DATAFORM_REPO_NAME="your-dataform-repo"      # Replace with your Dataform repository name
-   LOCAL_WORKING_DIRECTORY="$HOME/aef-demo"     # Replace with your preferred local directory
+   LOCAL_WORKING_DIRECTORY="~/aef-demo"     # Replace with your preferred local directory
    GITHUB_USER_NAME="your-github-username"      # Replace with your GitHub username
    AEF_OPERATOR_EMAIL="[email address removed]" # Replace with the AEF operator's email address
    AEF_TERRAFORM_BUCKET="your-bucket"           # Replace with an existing bucket in your project (should be created manually). Used to store terraform state
    ```
-3. Enable required APIs:
+6. Enable required APIs:
     ```bash
     sh enable_aef_apis.sh "$PROJECT_ID"
     ```
-3. Clone and deploy the AEF:
+7. Clone and deploy the AEF:
     ```bash
     sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL" "$AEF_TERRAFORM_BUCKET"
     ```
-5. Schedule your demo pipeline for execution:
+8. Schedule your demo pipeline for execution:
     ```bash
     sh schedule_demo_pipeline.sh "$LOCAL_WORKING_DIRECTORY" "$PROJECT_ID"
     ```
