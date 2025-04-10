@@ -24,4 +24,10 @@ locals {
     { name = "log_path", type = "STRING" },
     { name = "retry_count", type = "INTEGER" }
   ])
+
+  compute_sa_roles = toset([
+    "roles/cloudfunctions.admin",
+    "roles/logging.logWriter",
+    "roles/cloudbuild.builds.builder"
+  ])
 }

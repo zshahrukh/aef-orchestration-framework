@@ -44,7 +44,7 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    ```bash
    mkdir demo_deployment
    cd demo_deployment
-   curl -L https://api.github.com/repos/googlecloudplatform/aef-orchestration-framework/contents/demo_deployment?ref=main |   grep -E '"download_url":' |   awk '{print $2}' |   sed 's/"//g;s/,//g' |   xargs -n 1 curl -L -O
+   curl -L -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' https://api.github.com/repos/googlecloudplatform/aef-orchestration-framework/contents/demo_deployment?ref=main |   grep -E '"download_url":' |   awk '{print $2}' |   sed 's/"//g;s/,//g' |   xargs -n 1 curl -L -O
    ```
 
 5. Set variables :

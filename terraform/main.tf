@@ -117,14 +117,14 @@ module "scheduling-function" {
     ]
   }
   service_account = module.aef-scheduling-function-sa.email
-  depends_on = [google_firestore_database.database]
+  depends_on = [google_firestore_database.database, google_project_iam_member.compute_default_sa_additional_role]
 }
 
-#Grant the Additional Role for eventArc default Service Agent to be able to call CloudRun Cloud functions
-resource "google_project_iam_member" "compute_default_sa_additional_role" {
+resource "google_project_iam_member" "compute_default_sa_roles" {
+  for_each = local.compute_sa_roles
   project = var.project
-  role = "roles/cloudfunctions.admin"
-  member = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  role    = each.value
+  member  = "serviceAccount:${data.google_project.project.number}-compute@developer.gserviceaccount.com"
 }
 
 module "bigquery-dataset" {
