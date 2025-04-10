@@ -20,7 +20,7 @@ The Analytics Engineering Framework comprised of:
 - [python3](https://www.python.org/downloads/)
 - [terraform](https://developer.hashicorp.com/terraform/install)
 - A clean [GCP project](https://developers.google.com/workspace/guides/create-project) to deploy the AEF
-- A clean local working directory with >= 5GB storage available. Please note that Cloudshell instances provide 5GB storage.
+- At least 5GB storage available. Please note that Cloudshell instances provide 5GB storage.
 
 ### Deployment:
 Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Cloud Composer environment setup.
@@ -56,6 +56,11 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    AEF_OPERATOR_EMAIL="[email address removed]" # Replace with the AEF operator's email address
    AEF_TERRAFORM_BUCKET="your-bucket"           # Replace with an existing bucket in your project (should be created manually). Used to store terraform state
    ```
+6. Verify your pre-reqs are correctly installe:
+   ```bash
+   sh pre-reqs-install.sh
+   ```   
+
 6. Enable required APIs:
     ```bash
     sh enable_aef_apis.sh "$PROJECT_ID"

@@ -27,11 +27,6 @@ if [ -z "$new_repo_name" ] || [ -z "$project_id" ] || [ -z "$working_directory" 
   exit 1
 fi
 
-if [ ! -d "$working_directory" ] || [[ "${working_directory:0:1}" != "/" ]]; then
-  echo "Directory '$working_directory' does not exist. Please set a valid absolute path."
-  exit 1
-fi
-
 if [ ! -z "$(ls -A $working_directory)" ]; then
   echo "The provided working directory is not empty."
   read -r -p "Do you want to use it anyway? [y/N] " response
@@ -42,6 +37,11 @@ if [ ! -z "$(ls -A $working_directory)" ]; then
     exit 1
     ;;
   esac
+fi
+
+if [ ! -d "$working_directory" ] || [[ "${working_directory:0:1}" != "/" ]]; then
+  echo "Directory '$working_directory' does not exist. Creating it."
+  mkdir $working_directory
 fi
 
 gcloud firestore databases list --project=$project_id | grep -q "(default)"
@@ -59,6 +59,8 @@ gcloud storage buckets create "gs://$terraform_bucket" \
 #Fork demo [Dataform repository](https://github.com/googlecloudplatform/aef-data-orchestration/blob/0c1a69e655e3435b978e6a68640db141e86b2685/workflow-definitions/demo_pipeline_cloud_workflows.json#L42)
 echo "Forking sample Dataform repository ..."
 cd $working_directory
+git config --global user.email $aef_operator_email
+git config --global user.name $aef_operator_email
 # Check if gh is installed
 if ! command -v gh &> /dev/null; then
   echo "gh is not installed. Installing..."
@@ -132,6 +134,8 @@ if [ ! -f "aef-data-model/sample-data/terraform/tfplansampledata" ]; then
   terraform init
   terraform plan -out=tfplansampledata -var-file="demo.tfvars"
   terraform apply -auto-approve tfplansampledata
+  terraform plan -out=tfplansampledata -var-file="demo.tfvars"
+  terraform apply -auto-approve tfplansampledata
   fake_onprem_sql_private_ip=$(terraform output fake_onprem_sql_ip)
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-model/sample-data."
@@ -157,6 +161,8 @@ if [ ! -f "aef-data-model/terraform/tfplandatamodel" ]; then
   terraform init
   terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatamodel
+  terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
+  terraform apply -auto-approve tfplandatamodel
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-model."
   read -r -p "Do you want to skip it and continue? [y/N] " response
@@ -179,6 +185,8 @@ if [ ! -f "aef-data-orchestration/terraform/tfplandataorch" ]; then
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
   terraform init
+  terraform plan -out=tfplandataorch -var-file="prod.tfvars"
+  terraform apply -auto-approve tfplandataorch
   terraform plan -out=tfplandataorch -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandataorch
 else
@@ -210,6 +218,8 @@ if [ ! -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
   terraform init
   terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
   terraform apply -auto-approve tfplandatatrans
+  terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
+  terraform apply -auto-approve tfplandatatrans
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-transformation."
   read -r -p "Do you want to skip it and continue? [y/N] " response
@@ -230,6 +240,8 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   terraform init
+  terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
+  terraform apply -auto-approve tfplanorchframework
   terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
   terraform apply -auto-approve tfplanorchframework
 else
