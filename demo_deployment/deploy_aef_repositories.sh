@@ -18,7 +18,7 @@ project_id=$2
 working_directory=$3
 github_user_name=$4
 aef_operator_email=$5
-terraform_bucket=$6
+terraform_bucket='aef-'$project_id'-tfe'
 escaped_project_id=$(echo "$project_id" | sed 's/-/\\-/g')
 
 # Check if arguments are provided
@@ -54,7 +54,6 @@ gcloud storage buckets create "gs://$terraform_bucket" \
   --project="$project_id" \
   --location="us-central1" \
   --uniform-bucket-level-access
-
 
 #Fork demo [Dataform repository](https://github.com/googlecloudplatform/aef-data-orchestration/blob/0c1a69e655e3435b978e6a68640db141e86b2685/workflow-definitions/demo_pipeline_cloud_workflows.json#L42)
 echo "Forking sample Dataform repository ..."

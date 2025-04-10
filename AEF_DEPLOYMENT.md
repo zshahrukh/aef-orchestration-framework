@@ -54,7 +54,6 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    LOCAL_WORKING_DIRECTORY="~/aef-demo"     # Replace with your preferred local directory
    GITHUB_USER_NAME="your-github-username"      # Replace with your GitHub username
    AEF_OPERATOR_EMAIL="[email address removed]" # Replace with the AEF operator's email address
-   AEF_TERRAFORM_BUCKET="your-bucket"           # Replace with an existing bucket in your project (should be created manually). Used to store terraform state
    ```
 6. Verify your pre-reqs are correctly installed:
    ```bash
@@ -67,7 +66,7 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
     ```
 7. Clone and deploy the AEF:
     ```bash
-    sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL" "$AEF_TERRAFORM_BUCKET"
+    sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL"
     ```
 8. Schedule your demo pipeline for execution:
     ```bash
