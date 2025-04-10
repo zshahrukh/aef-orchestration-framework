@@ -56,7 +56,7 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    AEF_OPERATOR_EMAIL="[email address removed]" # Replace with the AEF operator's email address
    AEF_TERRAFORM_BUCKET="your-bucket"           # Replace with an existing bucket in your project (should be created manually). Used to store terraform state
    ```
-6. Verify your pre-reqs are correctly installe:
+6. Verify your pre-reqs are correctly installed:
    ```bash
    sh pre-reqs-install.sh
    ```   
