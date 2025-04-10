@@ -117,7 +117,7 @@ module "scheduling-function" {
     ]
   }
   service_account = module.aef-scheduling-function-sa.email
-  depends_on = [google_firestore_database.database, google_project_iam_member.compute_default_sa_additional_role]
+  depends_on = [google_firestore_database.database, google_project_iam_member.compute_default_sa_roles]
 }
 
 resource "google_project_iam_member" "compute_default_sa_roles" {
