@@ -62,4 +62,79 @@ gcloud services enable bigquery.googleapis.com \
                        dataproc.googleapis.com \
                        composer.googleapis.com \
                        datalineage.googleapis.com \
-                       clouderrorreporting.googleapis.com
+                       clouderrorreporting.googleapis.com \
+                       orgpolicy.googleapis.com \
+                       container.googleapis.com \
+                       containerregistry.googleapis.com \
+                       storage.googleapis.com \
+                       metastore.googleapis.com
+
+
+#sample BQ connection to warm-up and trigger default service agent creation (known issue)
+bq mk --connection --connection_type=CLOUD_RESOURCE --project_id=$project_id --location="us-central1" "aef-sample-conn"
+
+#Relax require OS Login (Argolis needed)
+rm os_login.yaml
+cat > os_login.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.requireOsLogin
+spec:
+  rules:
+  - enforce: false
+ENDOFFILE
+gcloud org-policies set-policy os_login.yaml
+rm os_login.yaml
+
+#Disable Serial Port Logging (Argolis needed)
+rm disableSerialPortLogging.yaml
+cat > disableSerialPortLogging.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.disableSerialPortLogging
+spec:
+  rules:
+  - enforce: false
+ENDOFFILE
+gcloud org-policies set-policy disableSerialPortLogging.yaml
+rm disableSerialPortLogging.yaml
+
+#Disable Shielded VM requirement (Argolis needed)
+rm shieldedVm.yaml
+cat > shieldedVm.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.requireShieldedVm
+spec:
+  rules:
+  - enforce: false
+ENDOFFILE
+gcloud org-policies set-policy shieldedVm.yaml
+rm shieldedVm.yaml
+
+#Disable VM can IP forward requirement (Argolis needed)
+rm vmCanIpForward.yaml
+cat > vmCanIpForward.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.vmCanIpForward
+spec:
+  rules:
+  - allowAll: true
+ENDOFFILE
+gcloud org-policies set-policy vmCanIpForward.yaml
+rm vmCanIpForward.yaml
+
+#Enable VM external access (Argolis needed)
+rm vmExternalIpAccess.yaml
+cat > vmExternalIpAccess.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.vmExternalIpAccess
+spec:
+  rules:
+  - allowAll: true
+ENDOFFILE
+gcloud org-policies set-policy vmExternalIpAccess.yaml
+rm vmExternalIpAccess.yaml
+
+#Enable restrict VPC peering (Argolis needed)
+rm restrictVpcPeering.yaml
+cat > restrictVpcPeering.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.restrictVpcPeering
+spec:
+  rules:
+  - allowAll: true
+ENDOFFILE
+gcloud org-policies set-policy restrictVpcPeering.yaml
+rm restrictVpcPeering.yaml

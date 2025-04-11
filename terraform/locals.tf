@@ -29,6 +29,9 @@ locals {
     "roles/cloudfunctions.admin",
     "roles/logging.logWriter",
     "roles/cloudbuild.builds.builder",
-    "roles/workflows.admin"
+    "roles/workflows.admin",
+    "roles/bigquery.dataEditor",
+    "roles/bigquery.admin",
+    "roles/dataproc.worker"
   ])
 }

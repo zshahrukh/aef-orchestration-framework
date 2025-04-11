@@ -50,12 +50,11 @@ if [[ $? -eq 0 ]]; then
   exit 1
 fi
 
+# Bucket to keep terraform state
 gcloud storage buckets create "gs://$terraform_bucket" \
   --project="$project_id" \
   --location="us-central1" \
   --uniform-bucket-level-access
-
-bq mk --connection --connection_type=CLOUD_RESOURCE --project_id=$project_id --location="us-central1" "aef-sample-conn"
 
 #Fork demo [Dataform repository](https://github.com/googlecloudplatform/aef-data-orchestration/blob/0c1a69e655e3435b978e6a68640db141e86b2685/workflow-definitions/demo_pipeline_cloud_workflows.json#L42)
 echo "Forking sample Dataform repository ..."
