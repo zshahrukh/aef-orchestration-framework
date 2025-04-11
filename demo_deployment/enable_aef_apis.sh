@@ -138,3 +138,18 @@ spec:
 ENDOFFILE
 gcloud org-policies set-policy restrictVpcPeering.yaml
 rm restrictVpcPeering.yaml
+
+# --- Create Policy YAML ---
+# Using the same structure as your osLogin example.
+# This attempts to disable enforcement for this specific policy
+# directly on the specified project.
+rm external_ip_policy_simple.yaml
+cat > external_ip_policy_simple.yaml << ENDOFFILE
+name: projects/$project_id/policies/compute.vmExternalIpAccess
+spec:
+  inheritFromParent: false
+  rules:
+  - allowAll: true
+ENDOFFILE
+gcloud org-policies set-policy external_ip_policy_simple.yaml
+rm external_ip_policy_simple.yaml
