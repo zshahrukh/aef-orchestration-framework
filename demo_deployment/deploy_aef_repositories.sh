@@ -55,6 +55,8 @@ gcloud storage buckets create "gs://$terraform_bucket" \
   --location="us-central1" \
   --uniform-bucket-level-access
 
+bq mk --connection --connection_type=CLOUD_RESOURCE --project_id=$project_id --location="us-central1" "aef-sample-conn"
+
 #Fork demo [Dataform repository](https://github.com/googlecloudplatform/aef-data-orchestration/blob/0c1a69e655e3435b978e6a68640db141e86b2685/workflow-definitions/demo_pipeline_cloud_workflows.json#L42)
 echo "Forking sample Dataform repository ..."
 cd $working_directory
@@ -240,3 +242,5 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
 else
   echo "WARNING!: There is a previous terraform deployment in aef-orchestration-framework, skipping it ... "
 fi
+
+bq rm --connection -f "aef-test-apr-10-6.us-central1.aef-sample-conn"
