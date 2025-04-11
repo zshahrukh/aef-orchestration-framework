@@ -28,6 +28,7 @@ locals {
   compute_sa_roles = toset([
     "roles/cloudfunctions.admin",
     "roles/logging.logWriter",
-    "roles/cloudbuild.builds.builder"
+    "roles/cloudbuild.builds.builder",
+    "roles/workflows.admin"
   ])
 }
