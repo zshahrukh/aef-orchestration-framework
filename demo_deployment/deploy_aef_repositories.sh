@@ -134,6 +134,8 @@ if [ ! -f "aef-data-model/sample-data/terraform/tfplansampledata" ]; then
   terraform init
   terraform plan -out=tfplansampledata -var-file="demo.tfvars"
   terraform apply -auto-approve tfplansampledata
+  terraform plan -out=tfplansampledata -var-file="demo.tfvars"
+  terraform apply -auto-approve tfplansampledata
   fake_onprem_sql_private_ip=$(terraform output fake_onprem_sql_ip)
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-model/sample-data."
@@ -157,6 +159,8 @@ if [ ! -f "aef-data-model/terraform/tfplandatamodel" ]; then
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
   sed -i.bak "s|<GITHUB_DATAFORM_REPOSITORY>|$escaped_github_dataform_repository|g" prod.tfvars
   terraform init
+  terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
+  terraform apply -auto-approve tfplandatamodel
   terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatamodel
 else
@@ -240,6 +244,7 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   terraform apply -auto-approve tfplanorchframework
   #Propagation Delay - Eventarc API enabled for the first time in a project, Eventarc Service Agent is created
   #Wait for 5-15
+  sleep 10
   terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
   terraform apply -auto-approve tfplanorchframework
 else
