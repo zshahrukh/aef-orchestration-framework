@@ -184,6 +184,8 @@ if [ ! -f "aef-data-orchestration/terraform/tfplandataorch" ]; then
   terraform init
   terraform plan -out=tfplandataorch -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandataorch
+  terraform plan -out=tfplandataorch -var-file="prod.tfvars"
+  terraform apply -auto-approve tfplandataorch
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-orchestration."
   read -r -p "Do you want to skip it and continue? [y/N] " response
@@ -211,6 +213,8 @@ if [ ! -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   terraform init
+  terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
+  terraform apply -auto-approve tfplandatatrans
   terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
   terraform apply -auto-approve tfplandatatrans
 else
@@ -243,4 +247,4 @@ else
   echo "WARNING!: There is a previous terraform deployment in aef-orchestration-framework, skipping it ... "
 fi
 
-bq rm --connection -f "aef-test-apr-10-6.us-central1.aef-sample-conn"
+bq rm --connection -f "$project_id.us-central1.aef-sample-conn"
