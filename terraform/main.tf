@@ -71,7 +71,6 @@ module "aef-scheduling-function-sa" {
   project_id = var.project
   name       = "aef-scheduling-function-sa"
 
-  # non-authoritative roles granted *to* the service accounts on other resources
   iam_project_roles = {
     "${var.project}" = [
       "roles/cloudfunctions.admin",

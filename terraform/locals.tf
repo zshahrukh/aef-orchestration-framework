@@ -32,6 +32,8 @@ locals {
     "roles/workflows.admin",
     "roles/bigquery.dataEditor",
     "roles/bigquery.admin",
-    "roles/dataproc.worker"
+    "roles/dataproc.worker",
+    "roles/dataflow.admin",
+    "roles/dataflow.worker"
   ])
 }
