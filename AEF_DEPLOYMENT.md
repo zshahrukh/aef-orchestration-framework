@@ -58,17 +58,20 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
 6. Verify your pre-reqs are correctly installed:
    ```bash
    sh pre-reqs-install.sh
-   ```   
-
+   ```
 6. Enable required APIs:
     ```bash
     sh enable_aef_apis.sh "$PROJECT_ID"
     ```
-7. Clone and deploy the AEF:
+7. If using a restrictive Organization set of policies (i.e. Argolis) follow instructions in the pre-requisites [here](https://github.com/anagha-google/spark-on-gcp-s8s/blob/main/01-foundational-setup.md#0-prerequisites) and run next script:
     ```bash
-    nohup sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL" > deploy_aef_repositories.log 2>&1 &
+    sh relax_org_policies.sh "$PROJECT_ID"
     ```
-8. Schedule your demo pipeline for execution:
+8. Clone and deploy the AEF:
+    ```bash 
+   sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL"
+    ```
+9. Schedule your demo pipeline for execution:
     ```bash
     sh schedule_demo_pipeline.sh "$LOCAL_WORKING_DIRECTORY" "$PROJECT_ID"
     ```
