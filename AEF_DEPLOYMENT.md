@@ -31,23 +31,26 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    eval "$(ssh-agent -s)"
    cat ~/.ssh/id_ed25519.pub
    ```
-   
 2. Add your recently created key (last output) to your github account (skip if your key is already configured in github).
    ![git_add_key.png](git_add_key.png)
 
-3. Login in gcloud
+3. Make sure you have a Classic personal github token available, if not create one like this: 
+   ![git_token_creation.png](git_token_creation.png)
+   ![git_token_scopes.png](git_token_scopes.png)
+
+4. Login in gcloud
    ```bash
    gcloud auth login
    ```
    
-4. Download `demo_deployment` folder containing demo deployment scripts:
+5. Download `demo_deployment` folder containing demo deployment scripts:
    ```bash
    mkdir demo_deployment
    cd demo_deployment
    curl -L -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' https://api.github.com/repos/googlecloudplatform/aef-orchestration-framework/contents/demo_deployment?ref=main |   grep -E '"download_url":' |   awk '{print $2}' |   sed 's/"//g;s/,//g' |   xargs -n 1 curl -L -O
    ```
 
-5. Set variables :
+6. Set variables :
     ```bash
    PROJECT_ID="your-gcp-project-id"             # Replace with your GCP Project ID
    DATAFORM_REPO_NAME="your-dataform-repo"      # Replace with your Dataform repository name
@@ -55,23 +58,23 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    GITHUB_USER_NAME="your-github-username"      # Replace with your GitHub username
    AEF_OPERATOR_EMAIL="[email address removed]" # Replace with the AEF operator's email address
    ```
-6. Verify your pre-reqs are correctly installed:
+7. Verify your pre-reqs are correctly installed:
    ```bash
    sh pre-reqs-install.sh
    ```
-6. Enable required APIs:
+8. Enable required APIs:
     ```bash
     sh enable_aef_apis.sh "$PROJECT_ID"
     ```
-7. If using a restrictive Organization set of policies (i.e. Argolis) follow instructions in the pre-requisites [here](https://github.com/anagha-google/spark-on-gcp-s8s/blob/main/01-foundational-setup.md#0-prerequisites) and run next script:
+9. If using a restrictive Organization set of policies (i.e. Argolis) follow instructions in the pre-requisites [here](https://github.com/anagha-google/spark-on-gcp-s8s/blob/main/01-foundational-setup.md#0-prerequisites) and run next script:
     ```bash
     sh relax_org_policies.sh "$PROJECT_ID"
     ```
-8. Clone and deploy the AEF:
+10. Clone and deploy the AEF:
     ```bash 
    sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL"
     ```
-9. Schedule your demo pipeline for execution:
+11. Schedule your demo pipeline for execution:
     ```bash
     sh schedule_demo_pipeline.sh "$LOCAL_WORKING_DIRECTORY" "$PROJECT_ID"
     ```
