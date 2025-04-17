@@ -247,6 +247,9 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   sleep 10
   terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
   terraform apply -auto-approve tfplanorchframework
+  sleep 20
+  terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
+  terraform apply -auto-approve tfplanorchframework
 else
   echo "WARNING!: There is a previous terraform deployment in aef-orchestration-framework, skipping it ... "
 fi
