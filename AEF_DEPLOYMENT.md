@@ -68,10 +68,15 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
     ```bash
     sh enable_aef_apis.sh "$PROJECT_ID"
     ```
-9. If using a restrictive Organization set of policies (i.e. Argolis) follow instructions in the pre-requisites [here](https://github.com/anagha-google/spark-on-gcp-s8s/blob/main/01-foundational-setup.md#0-prerequisites) and run next script:
-    ```bash
-    sh relax_org_policies.sh "$PROJECT_ID"
-    ```
+9. If using a restrictive Organization set of policies (i.e. Argolis):
+   - Grant yourself Security Admin at a Project level.
+     - Go to Cloud IAM and through the UI, grant yourself the **security admin** role at a **Project level**.
+   - Grant yourself Organization Policy Administrator at an Organization level.
+     - Go to Cloud IAM and through the UI, grant yourself the **Organization Policy Administrator** role at an **Organization level**.
+   - Run next script:
+       ```bash
+       sh relax_org_policies.sh "$PROJECT_ID"
+       ```
 10. Clone and deploy the AEF:
     ```bash 
     sh deploy_aef_repositories.sh "$DATAFORM_REPO_NAME" "$PROJECT_ID" "$LOCAL_WORKING_DIRECTORY" "$GITHUB_USER_NAME" "$AEF_OPERATOR_EMAIL"
