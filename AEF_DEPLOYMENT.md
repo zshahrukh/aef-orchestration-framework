@@ -24,10 +24,10 @@ The Analytics Engineering Framework comprised of:
 
 ### Deployment:
 Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Cloud Composer environment setup.
-0. Manualy create a new project
+0. [Create a new project](https://cloud.google.com/resource-manager/docs/creating-managing-projects#creating_a_project), or select one to use it.
 
 
-1. Create a new ssh key to use with github (skip if already have a key).
+1. Create a new ssh key to use with github (skip if already have a key in your terminal registered in github).
    ```bash
    ssh-keygen -t ed25519 -C "your_email@example.com"
    eval "$(ssh-agent -s)"
@@ -52,7 +52,7 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    curl -L -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' https://api.github.com/repos/googlecloudplatform/aef-orchestration-framework/contents/demo_deployment?ref=main |   grep -E '"download_url":' |   awk '{print $2}' |   sed 's/"//g;s/,//g' |   xargs -n 1 curl -L -O
    ```
 
-6. Set variables :
+6. Set variables:
     ```bash
    PROJECT_ID="your-gcp-project-id"
    DATAFORM_REPO_NAME="your-dataform-repo"
