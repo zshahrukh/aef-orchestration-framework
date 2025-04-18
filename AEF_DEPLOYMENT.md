@@ -24,6 +24,8 @@ The Analytics Engineering Framework comprised of:
 
 ### Deployment:
 Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Cloud Composer environment setup.
+0. Manualy create a new project
+
 
 1. Create a new ssh key to use with github (skip if already have a key).
    ```bash
