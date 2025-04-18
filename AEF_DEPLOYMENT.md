@@ -54,7 +54,7 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
     ```bash
    PROJECT_ID="your-gcp-project-id"
    DATAFORM_REPO_NAME="your-dataform-repo"
-   LOCAL_WORKING_DIRECTORY="~/aef-demo"
+   LOCAL_WORKING_DIRECTORY="/home/admin_/aef-demo"
    GITHUB_USER_NAME="your-github-username"
    AEF_OPERATOR_EMAIL="[email address removed]"
    ```
