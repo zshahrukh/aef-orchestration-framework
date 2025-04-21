@@ -215,10 +215,11 @@ if [ ! -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
   terraform_prefix=$(echo "aef-data-transformation/environments/dev" | sed 's/\//\\\//g')
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
+  sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
   terraform init
-  terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
+  terraform plan -out=tfplandatatrans -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatatrans
-  terraform plan -out=tfplandatatrans -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev'
+  terraform plan -out=tfplandatatrans -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatatrans
 else
   echo "WARNING!: There is a previous terraform deployment in aef-data-transformation."
@@ -239,16 +240,18 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   terraform_prefix=$(echo "aef-orchestration-framework/environments/dev" | sed 's/\//\\\//g')
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
+  sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
+  sed -i.bak "s/<OPERATOR_EMAIL>/$aef_operator_email/g" prod.tfvars
   terraform init
-  terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
+  terraform plan -out=tfplanorchframework -var-file="prod.tfvars"
   terraform apply -auto-approve tfplanorchframework
   #Propagation Delay - Eventarc API enabled for the first time in a project, Eventarc Service Agent is created
   #Wait for 5-15
   sleep 10
-  terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
+  terraform plan -out=tfplanorchframework -var-file="prod.tfvars"
   terraform apply -auto-approve tfplanorchframework
   sleep 20
-  terraform plan -out=tfplanorchframework -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email"
+  terraform plan -out=tfplanorchframework -var-file="prod.tfvars"
   terraform apply -auto-approve tfplanorchframework
 else
   echo "WARNING!: There is a previous terraform deployment in aef-orchestration-framework, skipping it ... "
