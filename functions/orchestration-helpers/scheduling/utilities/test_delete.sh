@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project=analytics-engg-framework-demo
-workflow_name=demo_pipeline_cloud_workflows
+project=$1
+workflow_name=$2
 
 python3 firestore_crud.py --gcp_project $project \
                           --workflow_name $workflow_name \

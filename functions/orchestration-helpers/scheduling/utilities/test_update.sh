@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project=analytics-engg-framework-demo
-region=us-central1
-workflow_name=demo_pipeline_cloud_workflows
+project=$1
+region=$2
+workflow_name=$3
 
 workflow_properties='{"location":"'$region'","project_id":"'$project'"}'
 
