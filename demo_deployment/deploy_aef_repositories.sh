@@ -158,6 +158,9 @@ if [ ! -f "aef-data-model/terraform/tfplandatamodel" ]; then
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
   sed -i.bak "s|<GITHUB_DATAFORM_REPOSITORY>|$escaped_github_dataform_repository|g" prod.tfvars
+  git add .
+  git commit -m "team variables setup"
+  git push origin main
   terraform init
   terraform plan -out=tfplandatamodel -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatamodel
@@ -184,6 +187,9 @@ if [ ! -f "aef-data-orchestration/terraform/tfplandataorch" ]; then
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
+  git add .
+  git commit -m "team variables setup"
+  git push origin main
   terraform init
   terraform plan -out=tfplandataorch -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandataorch
@@ -216,6 +222,9 @@ if [ ! -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
   sed -i.bak "s/<TERRAFORM_BUCKET>/$terraform_bucket/g" backend.tf
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
+  git add .
+  git commit -m "team variables setup"
+  git push origin main
   terraform init
   terraform plan -out=tfplandatatrans -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandatatrans
@@ -242,6 +251,9 @@ if [ ! -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   sed -i.bak "s/<TERRAFORM_ENV>/$terraform_prefix/g" backend.tf
   sed -i.bak "s/<PROJECT_ID>/$escaped_project_id/g" prod.tfvars
   sed -i.bak "s/<OPERATOR_EMAIL>/$aef_operator_email/g" prod.tfvars
+  git add .
+  git commit -m "team variables setup"
+  git push origin main
   terraform init
   terraform plan -out=tfplanorchframework -var-file="prod.tfvars"
   terraform apply -auto-approve tfplanorchframework
