@@ -14,10 +14,10 @@
 # limitations under the License.
 
 
-location='us-central2'
+location='us-central1'
 project='dp-111-trf'
 dataproc_serverless_project_id='diegodu-test-project-1'
-dataproc_serverless_region='us-central2'
+dataproc_serverless_region='us-central1'
 workflow_name='workflow1'
 job_name="J01_etl_step_1"
 start_date="2019-01-01"

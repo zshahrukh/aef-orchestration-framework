@@ -13,7 +13,7 @@
 # limitations under the License.
 
 project='dp-111-trf'
-location='us-central2'
+location='us-central1'
 workflow_name='workflow1'
 start_date="2019-01-01"
 end_date="2019-01-01"

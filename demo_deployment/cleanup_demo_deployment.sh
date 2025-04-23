@@ -35,7 +35,7 @@ cd $working_directory
 if [ -f "aef-orchestration-framework/terraform/tfplanorchframework" ]; then
   echo "Destroying aef-orchestration-framework demo deployment ..."
   cd aef-orchestration-framework/terraform
-  terraform destroy -auto-approve -var "project=$project_id" -var "region=us-central2" -var "operator_email=$aef_operator_email" | tee orchfrm_destroy.log
+  terraform destroy -auto-approve -var "project=$project_id" -var "region=us-central1" -var "operator_email=$aef_operator_email" | tee orchfrm_destroy.log
   if grep -qi "error" orchfrm_destroy.log; then
     echo "Terraform destroy failed. Check $working_directory/aef-orchestration-framework/terraform/orchfrm_destroy.log for details. And try again."
     exit 1
@@ -56,7 +56,7 @@ cd $working_directory
 if [ -f "aef-data-transformation/terraform/tfplandatatrans" ]; then
   echo "Destroying aef-data-transformation demo deployment ..."
   cd aef-data-transformation/terraform
-  terraform destroy -auto-approve -var "project=$project_id" -var 'region=us-central2' -var 'domain=example' -var 'environment=dev' | tee datatrans_destroy.log
+  terraform destroy -auto-approve -var "project=$project_id" -var 'region=us-central1' -var 'domain=example' -var 'environment=dev' | tee datatrans_destroy.log
   if grep -qi "error" datatrans_destroy.log; then
     echo "Terraform destroy failed. Check $working_directory/aef-data-transformation/terraform/datatrans_destroy.log for details. And try again."
     exit 1
@@ -96,20 +96,20 @@ fi
 cd $working_directory
 if [ -f "aef-data-model/sample-data/terraform/tfplansampledata" ]; then
   echo "Deleting sample dataform repository ..."
-  curl -X DELETE -H "Authorization: Bearer $(gcloud auth print-access-token)" "https://dataform.googleapis.com/v1beta1/projects/$project_id/locations/us-central2/repositories/sample-repo-1?force=true"
+  curl -X DELETE -H "Authorization: Bearer $(gcloud auth print-access-token)" "https://dataform.googleapis.com/v1beta1/projects/$project_id/locations/us-central1/repositories/sample-repo-1?force=true"
   echo "Deleting sample Bigquery datasets ..."
   bq rm -r -f -d $project_id:aef_landing_sample_dataset
   bq rm -r -f -d $project_id:aef_curated_sample_dataset
   bq rm -r -f -d $project_id:aef_exposure_sample_dataset
 
-  for ZONE_NAME in $(gcloud dataplex zones list --location=us-central2 --lake=aef-sales-lake --format="value(name)"); do
-    for ASSET_NAME in $(gcloud dataplex assets list --zone=$ZONE_NAME --location=us-central2 --lake=aef-sales-lake --format="value(name)"); do
-      gcloud dataplex assets delete $ASSET_NAME --location=us-central2 --zone=$ZONE_NAME --lake=aef-sales-lake --quiet
+  for ZONE_NAME in $(gcloud dataplex zones list --location=us-central1 --lake=aef-sales-lake --format="value(name)"); do
+    for ASSET_NAME in $(gcloud dataplex assets list --zone=$ZONE_NAME --location=us-central1 --lake=aef-sales-lake --format="value(name)"); do
+      gcloud dataplex assets delete $ASSET_NAME --location=us-central1 --zone=$ZONE_NAME --lake=aef-sales-lake --quiet
     done
-    gcloud dataplex zones delete $ZONE_NAME --location=us-central2 --lake=aef-sales-lake --quiet
+    gcloud dataplex zones delete $ZONE_NAME --location=us-central1 --lake=aef-sales-lake --quiet
   done
-  gcloud dataplex lakes delete aef-sales-lake --location=us-central2 --quiet
-  gcloud dataplex lakes delete another-sample-lake --location=us-central2 --quiet
+  gcloud dataplex lakes delete aef-sales-lake --location=us-central1 --quiet
+  gcloud dataplex lakes delete another-sample-lake --location=us-central1 --quiet
   cd aef-data-model/sample-data/terraform/
   terraform destroy -auto-approve -var-file="demo.tfvars" | tee sampledata_destroy.log
   if grep -qi "error" sampledata_destroy.log; then

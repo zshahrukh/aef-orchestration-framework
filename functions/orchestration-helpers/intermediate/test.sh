@@ -15,7 +15,7 @@
 sh ../../data-processing-engines/simple-dataform-query-executor/test.sh false
 
 project=<PROJECT_ID>
-location=us-central2
+location=us-central1
 
 job_name=J01_etl_step_1
 workflow_name=workflow1

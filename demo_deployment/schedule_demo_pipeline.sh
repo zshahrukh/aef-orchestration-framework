@@ -34,7 +34,7 @@ python3 -m pip install google-cloud
 python3 -m pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 python3 -m pip install --upgrade google-cloud-firestore
 
-region=us-central2
+region=us-central1
 workflow_name=demo_pipeline_cloud_workflows
 
 workflow_properties='{"location":"'$region'","project_id":"'$project_id'"}'
