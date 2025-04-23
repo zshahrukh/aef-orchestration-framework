@@ -21,11 +21,11 @@ fi
 
 # Project and environment variables
 project=<PROJECT_ID>
-location=us-central1
+location=us-central2
 repository_id=test-repo5
 
 # Dataform repository, test query, and JOB information
-dataform_location=us-central1
+dataform_location=us-central2
 dataform_project_id=<PROJECT_ID>
 commitname=bqfile
 

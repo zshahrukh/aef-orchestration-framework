@@ -70,4 +70,4 @@ gcloud services enable bigquery.googleapis.com \
                        metastore.googleapis.com
 
 #sample BQ connection to warm-up and trigger default service agent creation (known issue)
-bq mk --connection --connection_type=CLOUD_RESOURCE --project_id=$project_id --location="us-central1" "aef-sample-conn"
+bq mk --connection --connection_type=CLOUD_RESOURCE --project_id=$project_id --location="us-central2" "aef-sample-conn"

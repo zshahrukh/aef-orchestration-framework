@@ -53,7 +53,7 @@ fi
 # Bucket to keep terraform state
 gcloud storage buckets create "gs://$terraform_bucket" \
   --project="$project_id" \
-  --location="us-central1" \
+  --location="us-central2" \
   --uniform-bucket-level-access
 
 #Fork demo [Dataform repository](https://github.com/googlecloudplatform/aef-data-orchestration/blob/0c1a69e655e3435b978e6a68640db141e86b2685/workflow-definitions/demo_pipeline_cloud_workflows.json#L42)
@@ -269,4 +269,4 @@ else
   echo "WARNING!: There is a previous terraform deployment in aef-orchestration-framework, skipping it ... "
 fi
 
-bq rm --connection -f "$project_id.us-central1.aef-sample-conn"
+bq rm --connection -f "$project_id.us-central2.aef-sample-conn"
