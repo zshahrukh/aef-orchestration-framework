@@ -193,6 +193,7 @@ if [ ! -f "aef-data-orchestration/terraform/tfplandataorch" ]; then
   terraform init
   terraform plan -out=tfplandataorch -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandataorch
+  sleep 20
   terraform plan -out=tfplandataorch -var-file="prod.tfvars"
   terraform apply -auto-approve tfplandataorch
 else
