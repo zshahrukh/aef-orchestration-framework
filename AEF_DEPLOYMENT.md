@@ -35,10 +35,12 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
    ```
 2. Add your recently created key (last output) to your github account (skip if your key is already configured in github).
    Navigate to Account > Settings > SSH and GPG keys > New SSH key > Add SHH key
+
    ![git_add_key.png](git_add_key.png)
 
 3. Make sure you have a Classic personal github token available, if not create one like this: 
    Navigate to Account > Settings > Developer Settings > Personal Access Tokens > Classic
+
    ![git_token_creation.png](git_token_creation.png)
    ![git_token_scopes.png](git_token_scopes.png)
 
