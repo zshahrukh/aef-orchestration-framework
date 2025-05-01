@@ -32,7 +32,7 @@ python3 -m pip install --upgrade google-cloud-firestore
 
 workflow_properties='{"location":"'$region'","project_id":"'$project_id'"}'
 
-python3 scheduling/utilities/firestore_crud.py --gcp_project $project_id \
+python3 firestore_crud.py --gcp_project $project_id \
                           --workflow_name $workflow_name \
                           --operation_type CREATE \
                           --crond_expression '0 7 * * *' \
