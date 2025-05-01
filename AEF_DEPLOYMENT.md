@@ -87,7 +87,7 @@ Demo deployment takes up to 45 minutes, mostly due to Cloud SQL instance and Clo
     ```
 11. Schedule your demo pipeline for execution:
     ```bash
-    sh schedule_demo_pipeline.sh "$LOCAL_WORKING_DIRECTORY" "$PROJECT_ID"
+    sh schedule_pipeline.sh "$PROJECT_ID" "us-central1" "demo_pipeline_cloud_workflows"
     ```
    
 ### Cleanup:
